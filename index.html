@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Corporate Clash Server Tracker</title>
+	<link href="css/main.css" type="text/css" rel="stylesheet" />
+</head>
+<h1>Toontown Corporate Clash Server Tracker</h1>
+
+
+<script>
+	let request = new XMLHttpRequest();
+	request.open('get', 'https://corporateclash.net/api/v1/districts.js');
+	request.send();
+
+	const loadItem = (obj) => {
+		let div = document.createElement("div")
+		div.className = 'item';
+		
+		if (obj.invasion_online) {
+			div.innerHTML = `<p> <b>${obj.name}</b> is being attacked by <b>${obj.cogs_attacking}s</b>! </p>`;
+			div.innerHTML += `<p> There are currently ${obj.population} Toons in this district. </p>`;
+		}
+		else {
+			div.innerHTML = `<p> <b>${obj.name}</b> is currently safe!</p>`;
+			div.innerHTML += `<p> There are currently ${obj.population} Toons in this district. </p>`;
+		}
+		document.body.appendChild(div);
+	}
+
+	request.onload = function() {
+    	let ccData = JSON.parse(request.response);
+		ccData.forEach(loadItem);
+	};
+</script>
+ 
+
+</html>
+
