@@ -1,6 +1,6 @@
 let request = new XMLHttpRequest();
-// request.open('get', 'https://corporateclash.net/api/v1/districts.js');
-request.open('get', 'https://mechaturtles.com/corporateclashstatus/js/testdistrict.js');
+request.open('get', 'https://corporateclash.net/api/v1/districts.js');
+// request.open('get', 'https://mechaturtles.com/corporateclashstatus/js/testdistrict.js');
 request.send();
 
 const loadDistrict = (data, index, district) => {
@@ -13,7 +13,7 @@ const loadDistrict = (data, index, district) => {
 
 	if (data.invasion_online) {
 		let cogName = data.cogs_attacking.replace(/ /g,"_");
-		var icon = `<div class="icon"> <img src = "images/${cogName}.png" alt = "${data.cogs_attacking}" align = "center" onerror="this.src='images/FlippedFlippy.png'"/> </div>`;
+		var icon = `<div class="icon"> <img src = "images/${cogName}.png" alt = "${data.cogs_attacking}" align = "center" onerror="this.src='images/Unknown.png'"/> </div>`;
 		text += `<p style="color: red;"> <b>${data.name}</b> is being attacked by <b>${data.cogs_attacking}</b> cogs! </p>`;
 		
 	}
