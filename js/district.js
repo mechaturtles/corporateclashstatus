@@ -9,7 +9,6 @@ const loadDistrict = (data, index, district) => {
 	div.id = "district_" + index;
 	
 	let text = "";
-	let countdown = "";
 
 	if (data.invasion_online) {
 		let cogName = data.cogs_attacking.replace(/ /g,"_");
@@ -17,7 +16,7 @@ const loadDistrict = (data, index, district) => {
 		text += `<p style="color: red;"> <b>${data.name}</b> is being attacked by <b>${data.cogs_attacking}</b> cogs! </p>`;
 		
 		var countID = `timer_${index}`
-		countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}></h1></div></div>`
+		var countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}></h1></div></div>`
 		// const endTime = new Date(); //Testing purposes only
 		const endTime = new Date(data.last_update * 1000);
 		endTime.setSeconds(endTime.getSeconds() + data.remaining_time);
@@ -26,6 +25,7 @@ const loadDistrict = (data, index, district) => {
 	else {
 		var icon = `<div class="icon"> <img src = "images/Flippy.png" alt = "Flippy" align = "center"/> </div>`;
 		text += `<p style="color: green;"> <b>${data.name}</b> is currently safe!</p>`;
+		var countdown = `<div class="countdown"><div><h1 style="color: green;">SAFE</h1></div></div>`
 	}
 	text += `<p> There are currently <b>${data.population}</b> Toons defending this district. </p>`;
 	text = `<div class="details"> ${text} </div>`;
@@ -57,7 +57,6 @@ const loadDistrictModal = (data) => {
 	
 
 	let text = "";
-	let countdown = "";
 
 	if (data.invasion_online) {
 		let cogName = data.cogs_attacking.replace(/ /g,"_");
@@ -67,7 +66,7 @@ const loadDistrictModal = (data) => {
 		var defeat = `<p> <b>${data.count_defeated}</b> out of <b>${data.count_total}</b> cogs have been defeated during this invasion. </p>`;
 
 		var countID = `modalTimer`
-		countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}></h1></div></div>`
+		var countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}></h1></div></div>`
 		// const endTime = new Date(); //Testing purposes only
 		const endTime = new Date(data.last_update * 1000);
 		endTime.setSeconds(endTime.getSeconds() + data.remaining_time);
@@ -77,6 +76,7 @@ const loadDistrictModal = (data) => {
 		var icon = `<div class="icon"> <img src = "images/Flippy.png" alt = "Flippy" align = "center"/> </div>`;
 		text += `<p style="color: green;"> <b>${data.name}</b> is currently safe!</p>`;
 		var defeat = `<p> <b>${data.count_defeated}</b> cogs have been defeated since the last invasion. </p>`;
+		var countdown = `<div class="countdown"><div><h1 style="color: green;">SAFE</h1></div></div>`
 	}
 	text += `<p> There are currently <b>${data.population}</b> Toons defending this district. </p>`;
 	text = `<div class="details"> ${text} </div>`;
