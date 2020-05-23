@@ -27,7 +27,7 @@ const loadDistrict = (data, index, district) => {
 		// const endTime = new Date(); //Testing purposes only
 		const endTime = new Date(data.last_update * 1000);
 		endTime.setSeconds(endTime.getSeconds() + data.remaining_time);
-		timer(countID, endTime);
+		var districtInterval = timer(countID, endTime);
 	}
 	else {
 		var icon = `<div class="icon"> <img src = "images/Flippy.png" alt = "Flippy" align = "center"/> </div>`;
@@ -46,6 +46,7 @@ const loadDistrict = (data, index, district) => {
 
 	let currentDiv = document.getElementById(div.id);
 	if (currentDiv) {
+		clearInterval(districtInterval);
 		document.getElementById("districtList").replaceChild(div, currentDiv);
 	}
 	else {
