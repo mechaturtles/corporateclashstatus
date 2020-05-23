@@ -58,7 +58,7 @@ header h1{
 
 .district .details {
 	margin-left: 1rem;
-	margin-right: 1rem;
+	width: 25rem;
 }
 
 .district .countdown {
@@ -85,7 +85,7 @@ header h1{
 	-webkit-filter: drop-shadow(0rem 0.3rem 0.3rem rgb(38, 38, 38));
   	filter: drop-shadow(0rem 0.3rem 0.3rem rgb(38, 38, 38));
 }
-/* Modal based on w3schools */
+/* Modal elements based on w3schools */
 .modal {
 	display: none;
 	position: fixed;
@@ -114,6 +114,7 @@ header h1{
 	padding: 1rem;
 	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
+
 .modalBox .icon {
 	height: 6rem;
 }
