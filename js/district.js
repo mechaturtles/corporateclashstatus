@@ -63,7 +63,6 @@ const loadDistrictModal = (data) => {
 	modal.onclick = (event) => {
 		if (event.target === modal) {
 			modal.style.display = "none";
-			clearInterval(modalTimer);
 		}
 	}
 
@@ -82,12 +81,11 @@ const loadDistrictModal = (data) => {
 
 		var defeat = `<p> <b>${data.count_defeated}</b> out of <b>${data.count_total}</b> cogs have been defeated during this invasion. </p>`;
 
-		var countID = `modalTimer`
+		var countID = `${data.name.replace(/ /g, "_")}_timer`
 		var countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}></h1></div></div>`
-		// const endTime = new Date(); //Testing purposes only
-		const endTime = new Date(data.last_update * 1000);
-		endTime.setSeconds(endTime.getSeconds() + data.remaining_time);
-		var modalTimer = startTimer(countID, endTime);
+		// const endTime = new Date(data.last_update * 1000);
+		// endTime.setSeconds(endTime.getSeconds() + data.remaining_time);
+		// var modalTimer = startTimer(countID, endTime);
 	}
 	else {
 		var icon = `<div class="icon"> <img src = "images/Flippy.png" alt = "Flippy" align = "center"/> </div>`;
@@ -122,7 +120,9 @@ const startTimer = (id, endTime) => {
 		let timeLeft = endTime - currentTime;
 
 		let timeString = new Date(timeLeft).toISOString();
-		document.getElementById(id).innerHTML = timeString.slice(11, 19);
+		let idList = document.querySelectorAll(`#${id}`);
+		idList.forEach(id => id.innerHTML = timeString.slice(11, 19));
+		// document.getElementById(id).innerHTML = timeString.slice(11, 19);
 
 		if (timeLeft < 0) {
 			endTimer(id);
