@@ -4,6 +4,7 @@ const requestDistricts = link => fetch(link, { cache: "no-store" })
 	.then(response => response.json())
 	.then(data => data.forEach(loadDistrict));
 
+let timerList = [];
 requestDistricts(link);
 setInterval(() => requestDistricts(link), 60000);
 
@@ -22,12 +23,14 @@ const loadDistrict = (data, index, district) => {
 		var icon = `<div class="icon"> <img src = "images/${cogName}.png" alt = "${data.cogs_attacking}" align = "center" onerror="this.src='images/Unknown.png'"/> </div>`;
 		text += `<p style="color: red;"> <b>${data.name}</b> is being attacked by <b>${data.cogs_attacking}</b> cogs! </p>`;
 
-		var countID = `timer_${index}`
+		var countID = `${div.id}_timer`
 		var countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}></h1></div></div>`
-		// const endTime = new Date(); //Testing purposes only
+
 		const endTime = new Date(data.last_update * 1000);
 		endTime.setSeconds(endTime.getSeconds() + data.remaining_time);
-		var districtInterval = timer(countID, endTime);
+		// const endTime = new Date();
+		// endTime.setSeconds(endTime.getSeconds() + Math.floor(Math.random() * 10) + 2);
+		startTimer(countID, endTime);
 	}
 	else {
 		var icon = `<div class="icon"> <img src = "images/Flippy.png" alt = "Flippy" align = "center"/> </div>`;
@@ -46,7 +49,6 @@ const loadDistrict = (data, index, district) => {
 
 	let currentDiv = document.getElementById(div.id);
 	if (currentDiv) {
-		clearInterval(districtInterval);
 		document.getElementById("districtList").replaceChild(div, currentDiv);
 	}
 	else {
@@ -85,7 +87,7 @@ const loadDistrictModal = (data) => {
 		// const endTime = new Date(); //Testing purposes only
 		const endTime = new Date(data.last_update * 1000);
 		endTime.setSeconds(endTime.getSeconds() + data.remaining_time);
-		var modalTimer = timer(countID, endTime);
+		var modalTimer = startTimer(countID, endTime);
 	}
 	else {
 		var icon = `<div class="icon"> <img src = "images/Flippy.png" alt = "Flippy" align = "center"/> </div>`;
@@ -104,11 +106,17 @@ const loadDistrictModal = (data) => {
 
 
 
-/** Used to perform a countdown for each item
+/** 
+ * Starts a countdown timer.
+ * If a timer of a given id exists, it will be reset and a new timer will be created.
+ * 
  * @param id		Tag ID to pass in the time.
  * @param endTime	Date object that describes when the countdown stops.
  */
-const timer = (id, endTime) => {
+const startTimer = (id, endTime) => {
+	if (timerList[`${id}`]) {
+		endTimer(id);
+	};
 	let interval = setInterval(() => {
 		let currentTime = new Date();
 		let timeLeft = endTime - currentTime;
@@ -117,10 +125,16 @@ const timer = (id, endTime) => {
 		document.getElementById(id).innerHTML = timeString.slice(11, 19);
 
 		if (timeLeft < 0) {
-			clearInterval(interval);
+			endTimer(id);
 			document.getElementById(id).innerHTML = "OVER";
 			setTimeout(() => requestDistricts(link), 5000);
 		}
 	}, 100);
+	timerList[`${id}`] = interval;
 	return interval;
 };
+
+const endTimer = (id) => {
+	clearInterval(timerList[id]);
+	delete timerList[id];
+}
