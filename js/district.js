@@ -1,5 +1,5 @@
-//const link = "https://corporateclash.net/api/v1/districts.js"
-const link = "https://mechaturtles.com/corporateclashstatus/js/testdistrict.js" //Test Link
+const link = "https://corporateclash.net/api/v1/districts.js"
+//const link = "https://mechaturtles.com/corporateclashstatus/js/testdistrict.js" //Test Link
 const requestDistricts = link => fetch(link, { cache: "no-store" })
 	.then(response => response.json())
 	.then(data => data.forEach(loadDistrict));
