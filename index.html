@@ -12,14 +12,33 @@
 
 		gtag('config', 'UA-167456405-1');
 	</script>
+	<!-- Favicons from favicon.io -->
+	<link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+	<link rel="manifest" href="favicons/site.webmanifest">
+	<!-- Title -->
 	<title>Corporate Clash Status</title>
 	<link href="css/main.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
-	<header>
-		<h1>Toontown Corporate Clash Server Tracker</h1>
-	</header>
+	<div class="top">
+		<header>
+			<h1>Toontown Corporate Clash Server Tracker</h1>
+		</header>
+		<p>
+			This page is designed to show the status of all <a target="_blank" href="https://corporateclash.net/">Toontown: Corporate Clash</a> servers.
+			The data that you see here is automagically pulled from the 
+			<a target="_blank" href="https://github.com/CorporateClash/api-docs">TTCC API</a> 
+			every minute and every time an invasion ends!
+			<br>
+			If you have any questions, ideas, or are just plain curious about how this works, please take a look at the
+			<a target="_blank" href="https://github.com/mechaturtles/corporateclashstatus">Github page</a>. 
+			<br>
+			<b>Note: items can be clicked for more details!</b>
+		</p> 
+	</div>
 	<div class="districtList" id="districtList"></div>
 	<div class="modal" id="modal"></div>
 

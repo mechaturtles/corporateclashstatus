@@ -1,5 +1,5 @@
-const link = "https://corporateclash.net/api/v1/districts.js"
-//const link = "https://mechaturtles.com/corporateclashstatus/js/testdistrict.js" //Test Link
+//const link = "https://corporateclash.net/api/v1/districts.js"
+const link = "https://mechaturtles.com/corporateclashstatus/js/testdistrict.js" //Test Link
 const requestDistricts = link => fetch(link, { cache: "no-store" })
 	.then(response => response.json())
 	.then(data => data.forEach(loadDistrict));
@@ -19,7 +19,7 @@ const loadDistrict = (data, index, district) => {
 		var text = `<p style="color: red;"> <b>${data.name}</b> is being attacked by <b>${data.cogs_attacking}</b> cogs! </p>`;
 
 		var countID = `${div.id}_timer`
-		var countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}></h1></div></div>`
+		var countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}>OVER</h1></div></div>`
 
 		const endTime = new Date(data.last_update * 1000);
 		endTime.setSeconds(endTime.getSeconds() + data.remaining_time);
@@ -75,7 +75,7 @@ const loadDistrictModal = (data) => {
 		var defeat = `<p> <b>${data.count_defeated}</b> out of <b>${data.count_total}</b> cogs have been defeated during this invasion. </p>`;
 
 		var countID = `${data.name.replace(/ /g, "_")}_timer`
-		var countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}></h1></div></div>`
+		var countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}>OVER</h1></div></div>`
 	}
 	else {
 		var icon = `<div class="icon"> <img src = "images/Flippy.png" alt = "Flippy" align = "center"/> </div>`;
@@ -108,16 +108,19 @@ const startTimer = (id, endTime) => {
 	let interval = setInterval(() => {
 		let currentTime = new Date();
 		let timeLeft = endTime - currentTime;
-
-		let timeString = new Date(timeLeft).toISOString();
-		let idList = document.querySelectorAll(`#${id}`);
-		idList.forEach(id => id.innerHTML = timeString.slice(11, 19));
-
 		if (timeLeft < 0) {
 			endTimer(id);
-			document.getElementById(id).innerHTML = "OVER";
+			// document.getElementById(id).innerHTML = "OVER";
 			setTimeout(() => requestDistricts(link), 5000);
 		}
+		else{
+			let timeString = new Date(timeLeft).toISOString();
+			let idList = document.querySelectorAll(`#${id}`);
+			idList.forEach(id => id.innerHTML = timeString.slice(11, 19));
+		}
+
+
+
 	}, 100);
 	timerList[`${id}`] = interval;
 	return interval;
