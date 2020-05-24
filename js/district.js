@@ -10,31 +10,26 @@ setInterval(() => requestDistricts(link), 60000);
 
 const loadDistrict = (data, index, district) => {
 	let div = document.createElement("div")
-
-	let text = "";
-
 	div.className = "district";
 	div.id = data.name.replace(/ /g, "_");
-
-
-
+	
 	if (data.invasion_online) {
 		let cogName = data.cogs_attacking.replace(/ /g, "_");
 		var icon = `<div class="icon"> <img src = "images/${cogName}.png" alt = "${data.cogs_attacking}" align = "center" onerror="this.src='images/Unknown.png'"/> </div>`;
-		text += `<p style="color: red;"> <b>${data.name}</b> is being attacked by <b>${data.cogs_attacking}</b> cogs! </p>`;
+		var text = `<p style="color: red;"> <b>${data.name}</b> is being attacked by <b>${data.cogs_attacking}</b> cogs! </p>`;
 
 		var countID = `${div.id}_timer`
 		var countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}></h1></div></div>`
 
 		const endTime = new Date(data.last_update * 1000);
 		endTime.setSeconds(endTime.getSeconds() + data.remaining_time);
-		// const endTime = new Date();
-		// endTime.setSeconds(endTime.getSeconds() + Math.floor(Math.random() * 10) + 2);
+		// const endTime = new Date(); //Testing Only
+		// endTime.setSeconds(endTime.getSeconds() + Math.floor(Math.random() * 10) + 2); //Testing Only
 		startTimer(countID, endTime);
 	}
 	else {
 		var icon = `<div class="icon"> <img src = "images/Flippy.png" alt = "Flippy" align = "center"/> </div>`;
-		text += `<p style="color: green;"> <b>${data.name}</b> is currently safe!</p>`;
+		var text =  `<p style="color: green;"> <b>${data.name}</b> is currently safe!</p>`;
 		var countdown = `<div class="countdown"><div><h1 style="color: green;">SAFE</h1></div></div>`
 	}
 	text += `<p> There are currently <b>${data.population}</b> Toons defending this district. </p>`;
@@ -66,8 +61,6 @@ const loadDistrictModal = (data) => {
 		}
 	}
 
-
-
 	let modalBox = document.createElement("div");
 	modalBox.className = "modalBox";
 
@@ -83,9 +76,6 @@ const loadDistrictModal = (data) => {
 
 		var countID = `${data.name.replace(/ /g, "_")}_timer`
 		var countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}></h1></div></div>`
-		// const endTime = new Date(data.last_update * 1000);
-		// endTime.setSeconds(endTime.getSeconds() + data.remaining_time);
-		// var modalTimer = startTimer(countID, endTime);
 	}
 	else {
 		var icon = `<div class="icon"> <img src = "images/Flippy.png" alt = "Flippy" align = "center"/> </div>`;
@@ -122,7 +112,6 @@ const startTimer = (id, endTime) => {
 		let timeString = new Date(timeLeft).toISOString();
 		let idList = document.querySelectorAll(`#${id}`);
 		idList.forEach(id => id.innerHTML = timeString.slice(11, 19));
-		// document.getElementById(id).innerHTML = timeString.slice(11, 19);
 
 		if (timeLeft < 0) {
 			endTimer(id);
