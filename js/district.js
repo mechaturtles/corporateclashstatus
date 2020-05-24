@@ -55,16 +55,10 @@ const loadDistrictModal = (data) => {
 	let modal = document.getElementById("modal");
 	modal.style.display = "block";
 
-	modal.onclick = (event) => {
-		if (event.target === modal) {
-			modal.style.display = "none";
-		}
-	}
-
-	let modalBox = document.createElement("div");
+	let modalBox = document.getElementById("districtModal");
 	modalBox.className = "modalBox";
 
-
+	let close = `<span id="modalClose">&times;</span>`;
 	let text = "";
 
 	if (data.invasion_online) {
@@ -86,9 +80,17 @@ const loadDistrictModal = (data) => {
 	text += `<p> There are currently <b>${data.population}</b> Toons defending this district. </p>`;
 	text = `<div class="details"> ${text} </div>`;
 
-	modalBox.innerHTML = icon + text + defeat + countdown;
+	modalBox.innerHTML = close + icon + text + defeat + countdown;
 
-	modal.innerHTML = modalBox.outerHTML;
+	let modalClose = document.getElementById("modalClose");
+	modal.onclick = (event) => {
+		if (event.target === modal) {
+			modal.style.display = "none";
+		}
+	}
+	modalClose.onclick = () => {
+		modal.style.display = "none";
+	}
 }
 
 

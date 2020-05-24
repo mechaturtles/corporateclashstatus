@@ -31,8 +31,9 @@ header h1 {
 	height: 4rem;
 	position: relative;
 	z-index: 2;
-	font-size: 1rem;
 	margin: 1rem 2rem;
+	font-size: 1rem;
+	line-height: 1.3rem;
 }
 
 a {
@@ -146,9 +147,27 @@ a {
 	margin: 0 auto;
 
 }
+
 .modalBox .countdown h1 {
 	margin: 0rem;
 }
+
 .modalBox p {
 	margin: 0.5rem;
+}
+
+#modalClose {
+	position: absolute;
+	top: .75rem;
+	right: 1.5rem;
+	color: rgb(170, 170, 170);
+	font-size: 2rem;
+	font-weight: bold;
+}
+  
+#modalClose:hover,
+#modalClose:focus {
+	color: rgb(100, 100, 100);
+	text-decoration: none;
+	cursor: pointer;
 }
