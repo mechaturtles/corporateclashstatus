@@ -6,7 +6,7 @@ const requestDistricts = link => fetch(link, { cache: "no-store" })
 
 let timerList = [];
 requestDistricts(link);
-setInterval(() => requestDistricts(link), 1000);
+setInterval(() => requestDistricts(link), 60000);
 
 const loadDistrict = (data, index, district) => {
 	let div = document.createElement("div")
@@ -19,10 +19,10 @@ const loadDistrict = (data, index, district) => {
 		var text = `<p style="color: red;"> <b>${data.name}</b> is being attacked by <b>${data.cogs_attacking}</b> cogs! </p>`;
 
 		var countID = `${div.id}_timer`
-		var countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}></h1></div></div>`
+		var countdown = `<div class="countdown"><div><p>Remaining Time</p><h1 id=${countID}>OVER</h1></div></div>`
 
 		const endTime = new Date(data.last_update * 1000);
-		endTime.setSeconds(endTime.getSeconds() + 10000000);
+		endTime.setSeconds(endTime.getSeconds() + data.remaining_time);
 		// const endTime = new Date(); //Testing Only
 		// endTime.setSeconds(endTime.getSeconds() + Math.floor(Math.random() * 10) + 2); //Testing Only
 		startTimer(countID, endTime);
@@ -104,34 +104,33 @@ const loadDistrictModal = (data) => {
  * @param endTime	Date object that describes when the countdown stops.
  */
 const startTimer = (id, endTime) => {
-	if (timerList[`${id}`]) {
-		timerList[`${id}`]["endtime"] = endTime;
-		console.log(timerList);
-		return;
+	if (typeof timerList[`${id}`] !== "undefined") {
+		timerList[`${id}`]["endTime"] = endTime;
+		endTimer(id);
 	};
-	
 	let interval = setInterval(() => {
 		let currentTime = new Date();
 		let timeLeft = endTime - currentTime;
 		if (timeLeft < 0) {
 			endTimer(id);
-			// document.getElementById(id).innerHTML = "OVER";
 			setTimeout(() => requestDistricts(link), 5000);
-			console.log("post");
 		}
 		else{
 			let timeString = new Date(timeLeft).toISOString();
 			let idList = document.querySelectorAll(`#${id}`);
 			idList.forEach(id => id.innerHTML = timeString.slice(11, 19));
 		}
-	}, 5000);
 
-	
-	timerList[`${id}`] = {"timerID": interval, "endTime": endTime};
+
+
+	}, 100);
+	timerList[`${id}`]["timerID"] = interval;
+	timerList[`${id}`]["endTime"] = endTime;
+	// timerList[`${id}`] = interval;
+	console.log(timerList);
 };
 
 const endTimer = (id) => {
-	console.log("endTimer_" + id);
 	clearInterval(timerList[`${id}`]["timerID"]);
 	delete timerList[id];
 }
